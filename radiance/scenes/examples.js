@@ -4,6 +4,7 @@ import { Plane } from '../modules/shapes/plane.js';
 import { Box } from '../modules/shapes/box.js';
 import { Light } from '../modules/light.js';
 import { Appearance } from '../modules/appearance.js';
+import { Finish } from '../modules/finish.js';
 
 export function EmptySky() {
     let camera = new Camera(new Vector(-4, 1, -5), new Vector(0, 1, 0));
@@ -14,17 +15,17 @@ export function EmptySky() {
 export function MilesCamp() {
     let camera = new Camera(new Vector(4, 4, -5), new Vector(0, 1, 0), 16/4, 9/4);
     let background = new Color(10,10,50);
+    let shiny = new Finish({shiny: 0.8});
     let shapes = [
-        new Plane(Vector.Y, 0, Color.White),
-        new Sphere(new Vector(-4,1,4), 1, new Appearance(Color.Magenta)),
-        new Sphere(new Vector(-2,1,2), 1, new Appearance(Color.Blue)),
-        new Box(new Vector(-1,0,-1), new Vector(1,2,1), Color.Red),
-        new Sphere(new Vector(3,1,0), 1, new Appearance(Color.Green)),
-        new Sphere(new Vector(4,1,4), 1, new Appearance(Color.Yellow))
+        new Plane(Vector.Y, 0, new Appearance(Color.White)),
+        new Sphere(new Vector(-4,1,4), 1, new Appearance(Color.Magenta, shiny)),
+        new Sphere(new Vector(-2,1,2), 1, new Appearance(Color.Blue, shiny)),
+        new Box(new Vector(-1,0,-1), new Vector(1,2,1), new Appearance(Color.Red)),
+        new Sphere(new Vector(3,1,0), 1, new Appearance(Color.Green, shiny)),
+        new Sphere(new Vector(4,1,4), 1, new Appearance(Color.Yellow, shiny))
     ];
     let lights = [
-        new Light(new Vector(20,10,-10), Color.White),
-        new Light(new Vector(5,30,-5), Color.Grey)
+        new Light(new Vector(-20,20,-10), Color.White),
     ]
     let scene = new Scene(camera, background, shapes, lights);
     return scene;

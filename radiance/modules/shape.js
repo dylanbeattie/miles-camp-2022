@@ -2,11 +2,13 @@ import { THRESHOLD } from './settings.js';
 import { Vector } from './vector.js';
 import { Color } from './color.js';
 import { Ray } from './ray.js';
+import { Finish } from './finish.js';
 
 export class Shape {
 
     constructor(appearance) {
         this.appearance = appearance;
+        if (! this.appearance.finish) this.appearance.finish = Finish.Default;
     }
 
     intersect = () => { throw ("Classes which extend Shape must implement intersect"); };
@@ -26,9 +28,11 @@ export class Shape {
         return (this.closestDistanceAlongRay(ray) <= distanceToLight);
     }
 
-    getColorAt = (point, scene) => {
+    getColorAt = (point, ray, scene) => {
         let normal = this.getNormalAt(point);
-        let color = Color.Black;
+
+        let color = this.appearance.getAmbientColorAt(point);
+        let reflex = ray.reflect(normal);
         scene.lights.forEach(light => {
             let v = Vector.from(point).to(light.position);
 
@@ -40,6 +44,9 @@ export class Shape {
 
             let illumination = light.illuminate(this.appearance, point, brightness);
             color = color.add(illumination);
+
+            let highlight = this.appearance.finish.addHighlight(reflex, light, v);
+            color = color.add(highlight);  
         });
         return color;
     }

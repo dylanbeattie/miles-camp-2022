@@ -5,6 +5,7 @@ export class Ray {
         this.start = start;
         this.direction = direction.unit();
     }
+
     /** Trace this ray through the specified scene, and return the resulting color. */
     trace = (scene) => {
         let distances = scene.shapes.map(s => s.closestDistanceAlongRay(this));
@@ -12,8 +13,13 @@ export class Ray {
         if (shortestDistance == Infinity) return scene.background;
         let nearestShape = scene.shapes[distances.indexOf(shortestDistance)];
         let point = this.start.add(this.direction.scale(shortestDistance));
-        return nearestShape.getColorAt(point, scene);
+        return nearestShape.getColorAt(point, this, scene);
     }
 
+    reflect = normal => {
+        let inverse = this.direction.invert();
+        return inverse.add(normal.scale(normal.dot(inverse)).add(this.direction).scale(2));
+    }
+    
     toString = () => `ray: <${this.start.toString()}> => <${this.direction.toString()}>`;
 }
