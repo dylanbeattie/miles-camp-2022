@@ -1,23 +1,26 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import { setupCounter } from './counter.js'
+let canvas = document.getElementById('my-canvas');
+let context = canvas.getContext('2d');
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Miles!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+function callback(x,y,color) {
+  context.fillStyle = color;
+  context.fillRect(x,y,1,1);
+}
 
-setupCounter(document.querySelector('#counter'))
+function Pastels(x,y) {
+  return `rgb(${x},${y},100)`
+}
+function makeChessboard(size, color1, color2) {
+  return (x,y) => {
+      const xOdd = (x % (2 * size) < size);
+      const yOdd = (y % (2 * size) < size);
+      return (xOdd != yOdd ? color1 : color2);
+  }
+}
+
+let shader = makeChessboard(50, 'red', 'blue');
+for(var x = 0; x < canvas.clientWidth; x++) {
+  for(var y = 0; y < canvas.clientHeight; y++) {
+    let color = shader(x,y);
+    callback(x,y,color);
+  }
+}
