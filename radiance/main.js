@@ -10,5 +10,5 @@ function paintPixel(x, y, color) {
   ctx.fillRect(x, y, 1, 1);
 }
 
-let scene = ExampleScenes.MilesCamp2();
+let scene = ExampleScenes.MilesCamp();
 renderer.render(scene, paintPixel);
