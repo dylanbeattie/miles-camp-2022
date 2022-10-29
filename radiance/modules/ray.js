@@ -9,9 +9,10 @@ export class Ray {
     trace = (scene) => {
         let distances = scene.shapes.map(s => s.closestDistanceAlongRay(this));
         let shortestDistance = Math.min.apply(Math, distances);
-        if (shortestDistance == Infinity) return scene.background; 
+        if (shortestDistance == Infinity) return scene.background;
         let nearestShape = scene.shapes[distances.indexOf(shortestDistance)];
-        return nearestShape.color;
+        let point = this.start.add(this.direction.scale(shortestDistance));
+        return nearestShape.getColorAt(point, scene);
     }
 
     toString = () => `ray: <${this.start.toString()}> => <${this.direction.toString()}>`;

@@ -2,8 +2,8 @@ import { Shape } from '../shape.js';
 import { Vector } from '../vector.js';
 
 export class Sphere extends Shape {
-    constructor(center, radius, color) {
-        super(color);
+    constructor(center, radius, appearance) {
+        super(appearance);
         this.center = center;
         this.radius = radius;
     }
@@ -14,8 +14,7 @@ export class Sphere extends Shape {
 
         // Calculate a,b,c so we can plug them into the quadratic formula. Except
         // a should be the squared Euclidian distance of the ray direction,
-        // but ray directions are normalised to a unit vector, so a will be 1, 
-        // so we can ignore it.
+        // but ray directions are normalised to a unit vector, so a will be 1, so we can ignore it.
         let b = 2 * os.dot(ray.direction);
         let c = os.squid - this.radius * this.radius;
         
@@ -31,7 +30,8 @@ export class Sphere extends Shape {
 
         // Otherwise we have two intersections - one on the way in, one on the way out.
         let root = Math.sqrt(discriminant);
-        return [ (-b - root) / 2, (-b + root) / 2 ];   
-    }
+        return [ (-b - root) / 2, (-b + root) / 2 ];
+    };
     
+    getNormalAt = point => point.subtract(this.center).unit();
 }
