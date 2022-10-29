@@ -25,13 +25,16 @@ export class Shape {
         let ray = new Ray(point, vector);
         return (this.closestDistanceAlongRay(ray) <= distanceToLight);
     }
-    
+
     getColorAt = (point, scene) => {
         let normal = this.getNormalAt(point);
         let color = Color.Black;
         scene.lights.forEach(light => {
             let v = Vector.from(point).to(light.position);
-            if (scene.shapes.some(s => s.castsShadowFor(point, v))) return;
+
+            // If this point is in shadow, do not add any illumination for this light source
+            if (scene.shapes.some(shape => shape.castsShadowFor(point, v))) return;
+
             let brightness = normal.dot(v.unit());
             if (brightness <= 0) return;
 

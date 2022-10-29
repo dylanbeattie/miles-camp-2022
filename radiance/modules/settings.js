@@ -1,1 +1,1 @@
-export const THRESHOLD = 0.00000001;
+export const THRESHOLD = 0.000001;

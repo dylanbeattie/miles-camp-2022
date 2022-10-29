@@ -13,7 +13,7 @@ export class Camera {
         }
 
         // Calculate the direction - the vector pointing at the centre of the "frame"
-        this.direction = Vector.from(this.location).to(this.look_at).unit();
+        this.direction = this.look_at.add(this.location.invert()).unit();
 
         //  then work out which way is "right" and "up" relative to the camera
         this.right = Vector.Y.cross(this.direction).unit().scale(width / 2);
