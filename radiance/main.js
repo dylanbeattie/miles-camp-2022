@@ -10,6 +10,6 @@ function paintPixel(x, y, color) {
 }
 
 let camera = new Camera(new Vector(-4, 1, -5), new Vector(0, 1, 0), 16, 9);
-let background = new Color(120, 150, 255);
+let background = new Color(190, 120, 50);
 let scene = new Scene(camera, background);
 renderer.render(scene, paintPixel);
