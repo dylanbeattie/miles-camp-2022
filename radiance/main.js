@@ -1,26 +1,15 @@
+import { Renderer, Camera, Scene, Vector, Color } from './modules/renderer.js';
+
 let canvas = document.getElementById('my-canvas');
-let context = canvas.getContext('2d');
+let ctx = canvas.getContext('2d');
+let renderer = new Renderer(canvas.width, canvas.height);
 
-function callback(x,y,color) {
-  context.fillStyle = color;
-  context.fillRect(x,y,1,1);
-}
-
-function Pastels(x,y) {
-  return `rgb(${x},${y},100)`
-}
-function makeChessboard(size, color1, color2) {
-  return (x,y) => {
-      const xOdd = (x % (2 * size) < size);
-      const yOdd = (y % (2 * size) < size);
-      return (xOdd != yOdd ? color1 : color2);
-  }
+function paintPixel(x, y, color) {  
+  ctx.fillStyle = color.html;
+  ctx.fillRect(x, y, 1, 1);
 }
 
-let shader = makeChessboard(50, 'red', 'blue');
-for(var x = 0; x < canvas.clientWidth; x++) {
-  for(var y = 0; y < canvas.clientHeight; y++) {
-    let color = shader(x,y);
-    callback(x,y,color);
-  }
-}
+let camera = new Camera(new Vector(-4, 1, -5), new Vector(0, 1, 0), 16, 9);
+let background = new Color(120, 150, 255);
+let scene = new Scene(camera, background);
+renderer.render(scene, paintPixel);
