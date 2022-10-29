@@ -28,11 +28,15 @@ export class Shape {
         return (this.closestDistanceAlongRay(ray) <= distanceToLight);
     }
 
-    getColorAt = (point, ray, scene) => {
+    getColorAt = (point, ray, scene, depth) => {
         let normal = this.getNormalAt(point);
 
         let color = this.appearance.getAmbientColorAt(point);
         let reflex = ray.reflect(normal);
+
+        let reflection = this.appearance.reflect(point, reflex, scene, depth);
+        color = color.add(reflection);
+        
         scene.lights.forEach(light => {
             let v = Vector.from(point).to(light.position);
 

@@ -13,15 +13,15 @@ export function EmptySky() {
 }
 
 export function MilesCamp() {
-    let camera = new Camera(new Vector(4, 4, -5), new Vector(0, 1, 0), 16/4, 9/4);
+    let camera = new Camera(new Vector(4, 3, -5), new Vector(0, 1, 0), 16/4, 9/4);
     let background = new Color(10,10,50);
-    let shiny = new Finish({shiny: 0.8});
+    let shiny = new Finish({shiny: 0.8, reflection: 0.5 });
     let shapes = [
         new Plane(Vector.Y, 0, new Appearance(Color.White)),
         new Sphere(new Vector(-4,1,4), 1, new Appearance(Color.Magenta, shiny)),
         new Sphere(new Vector(-2,1,2), 1, new Appearance(Color.Blue, shiny)),
         new Box(new Vector(-1,0,-1), new Vector(1,2,1), new Appearance(Color.Red)),
-        new Sphere(new Vector(3,1,0), 1, new Appearance(Color.Green, shiny)),
+        new Sphere(new Vector(3,1,-2), 1, new Appearance(Color.Green, shiny)),
         new Sphere(new Vector(4,1,4), 1, new Appearance(Color.Yellow, shiny))
     ];
     let lights = [
