@@ -24,6 +24,7 @@ export class Color extends Material {
 
     static White = new Color(255, 255, 255);
     static Black = new Color(0, 0, 0);
+    static Gray = new Color(127, 127, 127);    
     static Grey = new Color(127, 127, 127);    
     static Red = new Color(255,0,0);
     static Green = new Color(0,255,0);

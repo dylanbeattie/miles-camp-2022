@@ -1,6 +1,7 @@
 import { THRESHOLD } from './settings.js';
 import { Vector } from './vector.js';
 import { Color } from './color.js';
+import { Ray } from './ray.js';
 
 export class Shape {
 
@@ -18,11 +19,19 @@ export class Shape {
         return shortestDistance;
     }
 
+    /** return true if the specified light casts a shadow of this shape at the specified point  */
+    castsShadowFor = (point, vector) => {
+        let distanceToLight = vector.length;
+        let ray = new Ray(point, vector);
+        return (this.closestDistanceAlongRay(ray) <= distanceToLight);
+    }
+    
     getColorAt = (point, scene) => {
         let normal = this.getNormalAt(point);
         let color = Color.Black;
         scene.lights.forEach(light => {
             let v = Vector.from(point).to(light.position);
+            if (scene.shapes.some(s => s.castsShadowFor(point, v))) return;
             let brightness = normal.dot(v.unit());
             if (brightness <= 0) return;
 

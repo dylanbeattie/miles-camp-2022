@@ -19,11 +19,12 @@ export function MilesCamp() {
         new Sphere(new Vector(-4,1,4), 1, new Appearance(Color.Magenta)),
         new Sphere(new Vector(-2,1,2), 1, new Appearance(Color.Blue)),
         new Box(new Vector(-1,0,-1), new Vector(1,2,1), Color.Red),
-        new Sphere(new Vector(2,1,2), 1, new Appearance(Color.Green)),
+        new Sphere(new Vector(3,1,0), 1, new Appearance(Color.Green)),
         new Sphere(new Vector(4,1,4), 1, new Appearance(Color.Yellow))
     ];
     let lights = [
-    new Light(new Vector(10,10,-10), Color.White)
+        new Light(new Vector(20,10,-10), Color.White),
+        new Light(new Vector(5,30,-5), Color.Grey)
     ]
     let scene = new Scene(camera, background, shapes, lights);
     return scene;
